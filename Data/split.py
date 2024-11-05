@@ -67,8 +67,8 @@ def split(X, y, strategy : int, test_size = 0.2):
             )
 
             # Разворачиваем обратно сигналы, метки и метаданные
-            X_train, y_train_labels, y_train_metadata = zip(*train_data)
-            X_test, y_test_labels, y_test_metadata = zip(*test_data)
+            X_train, y_train_labels, y_train_metadata = list(list(zip(*train_data)))
+            X_test, y_test_labels, y_test_metadata = list(zip(*test_data))
 
             y_train = [y_train_labels, y_train_metadata]
             y_test = [y_test_labels, y_test_metadata]
@@ -81,6 +81,10 @@ def split(X, y, strategy : int, test_size = 0.2):
             print(f"Test class distribution: {dict(zip(unique_test, counts_test))}")
 
 
+    X_train = np.array(X_train)
+    X_test = np.array(X_test)
+    y_train = np.array(y_train)
+    y_test = np.array(y_test)
 
     # Сохранение данных в файлы numpy
     with open('dumped/X_train.pkl', 'wb') as f:
