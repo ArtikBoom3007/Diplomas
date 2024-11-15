@@ -11,6 +11,8 @@ torch = "^2.5.1"
 torchvision = "^0.20.1"
 neurokit2 = "^0.2.10"
 scikit-learn = "^1.5.2"
+clearml = "^1.16.5"
+mlflow = "^2.17.2"
 
 
 [build-system]

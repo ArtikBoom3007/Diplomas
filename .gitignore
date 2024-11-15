@@ -4,3 +4,5 @@ Data/AMY_add
 .venv
 venv
 __pycache__
+.trash
+mlruns
