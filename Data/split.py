@@ -190,11 +190,13 @@ if __name__ == "__main__":
     args = {}
     filter = input("Enable filtering: (1/0) ")
     if filter:
-        args["filter"] = filter
+        args["filter"] = bool(filter)
         if bool(filter):
             hc = input("Enter highcut: (default 56) :")
             if hc:
-                args["highcut"] = hc
+                args["hcut"] = int(hc)
+            else:
+                args["hcut"] = int(56)
     
 
     # channels = input("Input channels divided by comma: ")
@@ -204,7 +206,7 @@ if __name__ == "__main__":
     #     args["channel"] = ch\
     
 
-    dgen.init(*args)
+    dgen.init(**args)
 
     amy, amyc, norm, amy_h, amyc_h, norm_h = dgen.read_data_with_meta()
 

@@ -9,7 +9,7 @@ import numpy as np
 current_module = sys.modules[__name__]
 module_path = os.path.dirname(inspect.getfile(current_module))
 
-def init(siglen = 5000, filter=False, hcut=56, channel : list = ['ECG I']):
+def init(siglen: int = 5000, filter: bool = False, hcut:int = 56, channel : list = ['ECG I']):
     global signal_len, make_filter, highcut, ecg_channel
     signal_len = siglen
     make_filter = filter
