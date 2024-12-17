@@ -8,8 +8,8 @@ dataset:
       0: 40
       1: 8
     train:
-      0: 248
-      1: 132
+      0: 124
+      1: 66
   test_size: 0
   train_size: 0
 loss_function:
@@ -19,7 +19,7 @@ loss_function:
     pos_weight:
     - 1
     - 4
-  type: FocalLoss
+  type: BCEWithLogitsLoss
 model:
   architecture: MultiBranchECGNet
   num_channels: 8

@@ -1,0 +1,27 @@
+augmentations:
+  mask_prob: 0.3
+  noise_level: 0.04
+  shift_range: 0.2
+dataset:
+  test_size: 0
+  train_size: 0
+loss_function:
+  parameters:
+    alpha: 1.0
+    gamma: 1
+    pos_weight:
+    - 1
+    - 4
+  type: BCEWithLogitsLoss
+model:
+  architecture: MultiBranchECGNet
+  num_channels: 8
+  num_classes: 2
+  parameters:
+    dropout_rate: 0.1
+    learning_rate: 0.001
+optimizer:
+  parameters:
+    lr: 0.0001
+    weight_decay: 1.0e-06
+  type: Adam
