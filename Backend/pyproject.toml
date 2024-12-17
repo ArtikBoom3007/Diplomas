@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "diplomas-backend"
+version = "0.1.0"
+description = ""
+authors = ["Артём Кравченко <artem.kravchenko@nvi-research.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.10.3"
+loguru = "^0.7.3"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+pyedflib = "^0.1.38"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
