@@ -9,7 +9,7 @@ import numpy as np
 current_module = sys.modules[__name__]
 module_path = os.path.dirname(inspect.getfile(current_module))
 
-def init(siglen = 750, filter=False, hcut=56, channel : list = ['ECG I']):
+def init(siglen: int = 5000, filter: bool = False, hcut:int = 56, channel : list = ['ECG I']):
     global signal_len, make_filter, highcut, ecg_channel
     signal_len = siglen
     make_filter = filter
@@ -94,19 +94,18 @@ def read_data_with_meta():
 
     for name in os.listdir(amy_path):
         signals, signal_headers, _ = highlevel.read_edf(os.path.join(amy_path, name))
-
-        amy.append(final_filter(signals, signal_headers[0]["sample_frequency"]))
-        amy_header.append(_)
+        filtered_value = final_filter(signals, signal_headers[0]["sample_frequency"])
+        cropped_value = crop([filtered_value])
+        amy.extend(cropped_value)
+        amy_header.extend([_] * len(cropped_value))
 
     for name in os.listdir(amyc_path):
         signals, signal_headers, _ = highlevel.read_edf(os.path.join(amyc_path, name))
-
         amyc.append(final_filter(signals, signal_headers[0]["sample_frequency"]))
         amyc_header.append(_)
 
     for name in os.listdir(norm_path):
         signals, signal_headers, _ = highlevel.read_edf(os.path.join(norm_path, name))
-
         norm.append(final_filter(signals, signal_headers[0]["sample_frequency"]))
         norm_header.append(_)
 
@@ -118,6 +117,6 @@ def read_data_with_meta():
 def crop(data : list):
     parts = []
     for record in data:
-        for i in range(int(record.shape[0] / signal_len) - 1):
-            parts.append(np.array(normalize(record[i*signal_len:(i+1) * signal_len])))
+        for i in range(int(record.shape[1] / signal_len)):
+            parts.append(np.array(normalize(record[:, i*signal_len:(i+1) * signal_len])))
     return parts

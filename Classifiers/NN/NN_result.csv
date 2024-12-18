@@ -1,0 +1,9 @@
+model_name,precision,recall,accuracy
+best_model_sampler_BCE_1_6.pt,0.5333333333333333,1.0,0.8541666666666666
+best_model_sampler_Focal.pt,0.875,0.875,0.9583333333333334
+best_model_new_balanced.pt,0.34782608695652173,1.0,0.6875
+best_model.pt,0.4375,0.875,0.7916666666666666
+best_model_sampler_Focal_new_att.pt,0.4375,0.875,0.7916666666666666
+best_model_balance_mode_2.pt,0.4375,0.875,0.7916666666666666
+mode3_BCE_1_2.pt,0.4666666666666667,0.875,0.8125
+best_model_sampler_BCE_1_6_new_att.pt,0.6363636363636364,0.875,0.8958333333333334
