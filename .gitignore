@@ -4,6 +4,6 @@ Data/AMY_add
 Data/EF_11k_approx
 .venv
 venv
-__pycache__
 .trash
-mlruns
+*__pycache__
+*mlruns
