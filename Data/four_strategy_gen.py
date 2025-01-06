@@ -87,10 +87,13 @@ os.makedirs(test_folder, exist_ok=True)
 
 
 def copy_files(file_list, target_folder):
+    bar = IncrementalBar(f"Copying files", max=len(file_list))
     for _, row in file_list.iterrows():
         src_path = os.path.join(edf_folder, (row["Анонимизированный EDF"] + ".edf"))
         dst_path = os.path.join(target_folder, (row["Анонимизированный EDF"] + ".edf"))
         shutil.copy(src_path, dst_path)
+        bar.next()
+    bar.finish()
 
 
 print("Copying files to dst folders!")
@@ -154,9 +157,9 @@ def final_filter(data, fs, order=4):
 
 for config_name, temp_train_files in split_data["train"].items():
 
-
     X_train = []
     y_train = []
+    y_meta = []
 
     bar = IncrementalBar(f"Train config {config_name}", max=len(temp_train_files))
 
@@ -166,7 +169,7 @@ for config_name, temp_train_files in split_data["train"].items():
     for _, row in temp_train_files.iterrows():
         name = row["Анонимизированный EDF"] + ".edf"
         full_pth = os.path.join(train_folder, name)
-        signals, signal_headers, trash = highlevel.read_edf(full_pth)
+        signals, signal_headers, meta = highlevel.read_edf(full_pth)
         cropped_value = crop([signals])
 
         null_filtered = []
@@ -182,6 +185,7 @@ for config_name, temp_train_files in split_data["train"].items():
             X_train.extend(null_filtered)
             train_itoname_map[int(len(X_train) - 1)] = name
             y_train.extend(np.ones(len(null_filtered), dtype=np.int8) * row["class"])
+            y_meta.extend([meta])
         bar.next()
     bar.finish()
 
@@ -199,8 +203,11 @@ for config_name, temp_train_files in split_data["train"].items():
 
     print(f"Train for config {config_name} class distribution: {train_dict}")
     gc.collect()
-    X_train = np.array(X_train, dtype=np.float16)
-    y_train = np.array(y_train, dtype=np.int8)
+
+    y_train = [y_train, y_meta]
+
+    X_train = np.array(X_train, dtype=np.float64)
+    y_train = np.array(y_train)
 
     with open(f"./Data/dumped/X_train_fraction_{config_name}.pkl", "wb") as f:
         pickle.dump(X_train, f)
@@ -212,6 +219,7 @@ for config_name, temp_test_files in split_data["test"].items():
 
     X_test = []
     y_test = []
+    y_meta = []
 
     test_itoname_map = {}
     badass_data_names = []
@@ -221,7 +229,7 @@ for config_name, temp_test_files in split_data["test"].items():
     for _, row in temp_test_files.iterrows():
         name = row["Анонимизированный EDF"] + ".edf"
         full_pth = os.path.join(test_folder, name)
-        signals, signal_headers, _ = highlevel.read_edf(full_pth)
+        signals, signal_headers, meta = highlevel.read_edf(full_pth)
         cropped_value = crop([signals])
         null_filtered = []
         for value in cropped_value:
@@ -236,6 +244,7 @@ for config_name, temp_test_files in split_data["test"].items():
             X_test.extend(null_filtered)
             test_itoname_map[int(len(X_test) - 1)] = name
             y_test.extend(np.ones(len(null_filtered), dtype=np.int8) * row["class"])
+            y_meta.extend([meta])
         bar.next()
     bar.finish()
 
@@ -251,8 +260,10 @@ for config_name, temp_test_files in split_data["test"].items():
     }
     print(f"Test for config {config_name} class distribution: {train_dict}")
     gc.collect()
-    X_test = np.array(X_test, dtype=np.float16)
-    y_test = np.array(y_test, dtype=np.int8)
+    y_test = [y_test, y_meta]
+
+    X_test = np.array(X_test, dtype=np.float64)
+    y_test = np.array(y_test)
 
     with open(f"./Data/dumped/X_test_fraction_{config_name}.pkl", "wb") as f:
         pickle.dump(X_test, f)
