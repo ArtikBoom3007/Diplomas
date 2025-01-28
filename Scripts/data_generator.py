@@ -113,20 +113,20 @@ def read_data_with_meta():
         filtered_value = final_filter(signals, signal_headers[0]["sample_frequency"])
         cropped_value = crop([filtered_value])
 
-        _["filename"] = (Path(amy_path) / name).resolve()
+        _["filename"] = (Path(amy_path) / name).resolve().relative_to("/home/kravchenko.artem/Projects/Diplomas").__str__()
         amy.extend(cropped_value)
         amy_header.extend([_] * len(cropped_value))
 
     for name in os.listdir(amyc_path):
         signals, signal_headers, _ = highlevel.read_edf(os.path.join(amyc_path, name))
         amyc.append(final_filter(signals, signal_headers[0]["sample_frequency"]))
-        _["filename"] = (Path(amyc_path) / name).resolve()
+        _["filename"] = (Path(amyc_path) / name).resolve().relative_to("/home/kravchenko.artem/Projects/Diplomas").__str__()
         amyc_header.append(_)
 
     for name in os.listdir(norm_path):
         signals, signal_headers, _ = highlevel.read_edf(os.path.join(norm_path, name))
         norm.append(final_filter(signals, signal_headers[0]["sample_frequency"]))
-        _["filename"] = (Path(norm_path) / name).resolve()
+        _["filename"] = (Path(norm_path) / name).resolve().relative_to("/home/kravchenko.artem/Projects/Diplomas").__str__()
         norm_header.append(_)
 
     sample_rate = signal_headers[0]["sample_frequency"]

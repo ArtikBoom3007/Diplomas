@@ -47,14 +47,16 @@ os.makedirs(test_folder, exist_ok=True)
 
 
 def copy_files(file_list, target_folder):
+    bar = IncrementalBar("Copying files...", max=len(file_list))
     for _, row in file_list.iterrows():
         src_path = os.path.join(edf_folder, (row["Анонимизированный EDF"] + ".edf"))
         dst_path = os.path.join(target_folder, (row["Анонимизированный EDF"] + ".edf"))
         shutil.copy(src_path, dst_path)
+        bar.next()
 
 
-# copy_files(train_files, train_folder)
-# copy_files(test_files, test_folder)
+copy_files(train_files, train_folder)
+copy_files(test_files, test_folder)
 
 # vad_folder = os.path.join(extract_folder, "vad")
 # os.makedirs(vad_folder, exist_ok=True)
@@ -80,7 +82,7 @@ def copy_files(file_list, target_folder):
 # print(signal_headers)
 # print(header)
 
-signal_len = 1000
+signal_len = 5000
 
 
 def crop(data: list):
