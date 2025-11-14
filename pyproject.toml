@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Артём Кравченко <artem.kravchenko@nvi-research.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -13,6 +14,10 @@ neurokit2 = "^0.2.10"
 scikit-learn = "^1.5.2"
 clearml = "^1.16.5"
 mlflow = "^2.17.2"
+pyedflib = "^0.1.42"
+ecg-plot = "^0.2.8"
+pyqt5 = "^5.15.11"
+loguru = "^0.7.3"
 
 
 [build-system]
