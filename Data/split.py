@@ -170,8 +170,6 @@ def split(X, y, strategy : int, norm_len=None, amyc_len=None,test_size = 0.2):
     X_test = np.array(X_test)
     y_train = np.array(y_train)
     y_test = np.array(y_test)
-    
-    print(X_train.shape)
 
     # Сохранение данных в файлы numpy
     with open('dumped/X_train.pkl', 'wb') as f:

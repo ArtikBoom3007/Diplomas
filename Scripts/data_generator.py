@@ -92,8 +92,8 @@ def read_data_with_meta():
     # If this module starts from different places. Make path consistency.
     path = os.path.join(module_path, "../Data")
 
-    amy_path = os.path.join(path, "Amy/Amy")
-    amyc_path = os.path.join(path, "AmyC/AmyC")
+    amy_path = os.path.join(path, "Amy")
+    amyc_path = os.path.join(path, "AmyC")
     norm_path = os.path.join(path, "AMY_add/AMY/2")
 
     amy = []
@@ -116,7 +116,7 @@ def read_data_with_meta():
         _["filename"] = (
             (Path(amy_path) / name)
             .resolve()
-            .relative_to("/home/kravchenko.artem/Projects/Diplomas")
+            .relative_to("/workspaces")
             .__str__()
         )
         amy.extend(cropped_value)
@@ -128,7 +128,7 @@ def read_data_with_meta():
         _["filename"] = (
             (Path(amyc_path) / name)
             .resolve()
-            .relative_to("/home/kravchenko.artem/Projects/Diplomas")
+            .relative_to("/workspaces")
             .__str__()
         )
         amyc_header.append(_)
@@ -139,7 +139,7 @@ def read_data_with_meta():
         _["filename"] = (
             (Path(norm_path) / name)
             .resolve()
-            .relative_to("/home/kravchenko.artem/Projects/Diplomas")
+            .relative_to("/workspaces")
             .__str__()
         )
         norm_header.append(_)

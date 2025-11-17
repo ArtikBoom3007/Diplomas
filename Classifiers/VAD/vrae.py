@@ -276,7 +276,7 @@ class VRAE(BaseEstimator, nn.Module):
         kl_loss = -0.5 * torch.mean(1 + latent_logvar - latent_mean.pow(2) - latent_logvar.exp())
         recon_loss = loss_fn(x_decoded, x)
 
-        return kl_loss + recon_loss, recon_loss, kl_loss
+        return 100 * kl_loss + recon_loss, recon_loss, kl_loss
 
     def compute_loss(self, X):
         """

@@ -5,11 +5,11 @@ augmentations:
 dataset:
   class_distribution:
     test:
-      0: 454
-      1: 454
+      0: 40
+      1: 8
     train:
-      0: 454
-      1: 454
+      0: 54
+      1: 54
   test_size: 0
   train_size: 0
 loss_function:
@@ -18,7 +18,7 @@ loss_function:
     gamma: 1
     pos_weight:
     - 1
-    - 4
+    - 10
   type: BCEWithLogitsLoss
 model:
   architecture: MultiBranchECGNet
